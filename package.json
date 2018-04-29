@@ -1,0 +1,42 @@
+{
+  "name": "simple-direct-democracy-frontend",
+  "version": "0.0.1-alpha",
+  "private": true,
+  "dependencies": {
+    "prop-types": "^15.6.1",
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2",
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "1.1.4",
+    "semantic-ui-css": "^2.3.1",
+    "semantic-ui-react": "^0.79.1",
+    "styled-components": "^3.2.6"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "dev": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "description": "Fast and minimal frontend for a simple direct democracy's suggestion and voting system.",
+  "main": "src/index.js",
+  "devDependencies": {
+    "eslint-plugin-react": "^7.7.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pojntfx/simple-direct-democracy-frontend.git"
+  },
+  "keywords": [
+    "direct-democracy",
+    "grapqhl",
+    "react"
+  ],
+  "author": "Felix Pojtinger",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/pojntfx/simple-direct-democracy-frontend/issues"
+  },
+  "homepage": "https://github.com/pojntfx/simple-direct-democracy-frontend#readme"
+}
