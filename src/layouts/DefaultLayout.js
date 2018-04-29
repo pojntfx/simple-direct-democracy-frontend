@@ -4,7 +4,8 @@ import { MainNavigation } from "../components/global/MainNavigation";
 import styled from "styled-components";
 
 const Container = styled(ContainerTemplate)`
-  padding: calc(2.85714286em + 1em) 0;
+  padding-top: calc(2.85714286em + 1em);
+  padding-bottom: calc(2.85714286em + 1em + 0.9em);
 `;
 
 export const DefaultLayout = ({ children, ...otherProps }) => (
