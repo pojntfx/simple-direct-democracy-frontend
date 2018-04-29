@@ -1,17 +1,33 @@
 import React, { Fragment } from "react";
 import { BottomBar } from "./BottomBar";
 import { Proposal } from "./Proposal";
+import gql from "graphql-tag";
+import { Query } from "react-apollo";
+
+const GET_ALL_PROPOSALS = gql`
+  {
+    allProposals {
+      text
+      votes
+      id
+    }
+  }
+`;
 
 export const Proposals = () => (
   <Fragment>
-    <Proposal voteCount="279">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam possimus
-      beatae cum quod delectus neque!
-    </Proposal>
-    <Proposal voteCount="345">Lorem ipsum dolor sit amet.</Proposal>
-    <Proposal voteCount="567">
-      Officia dicta mollitia natus vel ipsum? Eius, sequi!
-    </Proposal>
+    <Query query={GET_ALL_PROPOSALS}>
+      {({ loading, error, data }) => {
+        if (loading) return "Loading ...";
+        if (error) return `Error! ${error.message}`;
+
+        return data.allProposals.map(({ text, votes, id }, index) => (
+          <Proposal votes={votes} id={id} key={index}>
+            {text}
+          </Proposal>
+        ));
+      }}
+    </Query>
     <BottomBar />
   </Fragment>
 );
