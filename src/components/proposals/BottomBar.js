@@ -7,6 +7,7 @@ import {
   Icon
 } from "semantic-ui-react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const BottomMenu = styled(Menu)`
   overflow-x: auto;
@@ -52,7 +53,7 @@ export class BottomBar extends Component {
     return (
       <BottomMenu fixed="bottom" borderless>
         <Menu.Item position="left">
-          <Button icon>
+          <Button icon as={Link} to="/introduction">
             <Icon name="info" />
           </Button>
         </Menu.Item>

@@ -10,6 +10,7 @@ const CardActions = styled.div`
   & > *:not(:first-child) {
     padding: 0 2rem;
     color: black;
+    font-size: 20px;
   }
   overflow-x: auto;
 `;
@@ -20,21 +21,27 @@ const CardButton = styled(Button)`
   white-space: nowrap;
 `;
 
-export const Proposal = ({ children, voteCount, ...otherProps }) => (
+export const Proposal = ({
+  children,
+  voteCount,
+  onUpvote,
+  onDownvote,
+  ...otherProps
+}) => (
   <Card fluid {...otherProps}>
     <Card.Content>
       <Card.Header>{children}</Card.Header>
     </Card.Content>
     <Card.Content extra>
       <CardActions>
-        <CardButton basic color="green">
+        <CardButton basic color="green" onClick={onUpvote}>
           <Icon name="arrow up" />
           Upvote
         </CardButton>
         <span>
           <b>{voteCount}</b>
         </span>
-        <CardButton basic color="red">
+        <CardButton basic color="red" onClick={onDownvote}>
           <Icon name="arrow down" />
           Downvote
         </CardButton>
