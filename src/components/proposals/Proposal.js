@@ -13,8 +13,8 @@ const UPVOTE_PROPOSAL = gql`
 `;
 
 const DOWNVOTE_PROPOSAL = gql`
-  mutation($id: String!) {
-    downvoteProposal(id: $id) {
+  mutation($id: String!, $author: String!) {
+    downvoteProposal(id: $id, author: $author) {
       votes
     }
   }
@@ -67,7 +67,11 @@ export const Proposal = ({ children, votes, id, ...otherProps }) => (
             <CardButton
               basic
               color="red"
-              onClick={() => downvoteProposal({ variables: { id } })}
+              onClick={() =>
+                downvoteProposal({ variables: { id, author: "me" } }).catch(
+                  error => alert(error)
+                )
+              }
             >
               <Icon name="arrow down" />
               Downvote
