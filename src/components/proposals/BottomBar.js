@@ -8,6 +8,16 @@ import {
 } from "semantic-ui-react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import gql from "graphql-tag";
+import { Mutation } from "react-apollo";
+
+const SEND_PROPOSAL = gql`
+  mutation($text: String!, $author: String!) {
+    createProposal(text: $text, author: $author) {
+      text
+    }
+  }
+`;
 
 const BottomMenu = styled(Menu)`
   overflow-x: auto;
@@ -15,11 +25,6 @@ const BottomMenu = styled(Menu)`
   &.ui.menu:not(.vertical) .left.menu {
     margin-right: 0 !important;
     padding-right: 0;
-  }
-  &.ui.menu:not(.vertical) .right.item,
-  &.ui.menu:not(.vertical) .right.menu {
-    margin-left: 0 !important;
-    padding-left: 0;
   }
 `;
 
@@ -29,15 +34,18 @@ const TextArea = styled(TextAreaTemplate)`
 
 const CenterItem = styled(Menu.Item)`
   flex-grow: 1 !important;
+  padding-right: 0 !important;
 `;
 
 const MainTextAreaWrapper = styled(Form)`
   width: 100%;
+  display: flex;
+  align-items: center;
 `;
 
 export class BottomBar extends Component {
   state = {
-    proposalText: undefined
+    proposalText: ""
   };
 
   onInput = ({ target: { value } }) => {
@@ -46,8 +54,13 @@ export class BottomBar extends Component {
     });
   };
 
+  clearProposalText = () =>
+    this.setState({
+      proposalText: ""
+    });
+
   render() {
-    const { onInput } = this;
+    const { onInput, clearProposalText } = this;
     const { proposalText } = this.state;
 
     return (
@@ -57,7 +70,6 @@ export class BottomBar extends Component {
             <Icon name="info" />
           </Button>
         </Menu.Item>
-
         <CenterItem>
           <MainTextAreaWrapper>
             <TextArea
@@ -65,19 +77,33 @@ export class BottomBar extends Component {
               onChange={onInput}
               value={proposalText}
               autoHeight={proposalText ? true : false}
+              required
             />
+            <Menu.Item position="right">
+              <Mutation mutation={SEND_PROPOSAL}>
+                {createProposal => (
+                  <Button
+                    animated="vertical"
+                    color="blue"
+                    onClick={() =>
+                      proposalText === ""
+                        ? null
+                        : createProposal({
+                            variables: { text: proposalText, author: "me" }
+                          }).then(clearProposalText)
+                    }
+                    type="submit"
+                  >
+                    <Button.Content visible>Share</Button.Content>
+                    <Button.Content hidden>
+                      <Icon name="send" />
+                    </Button.Content>
+                  </Button>
+                )}
+              </Mutation>
+            </Menu.Item>
           </MainTextAreaWrapper>
-          {/* <Input /> */}
         </CenterItem>
-
-        <Menu.Item position="right">
-          <Button animated="vertical" color="blue">
-            <Button.Content visible>Share</Button.Content>
-            <Button.Content hidden>
-              <Icon name="send" />
-            </Button.Content>
-          </Button>
-        </Menu.Item>
       </BottomMenu>
     );
   }
