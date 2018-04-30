@@ -90,7 +90,9 @@ export class BottomBar extends Component {
                         ? null
                         : createProposal({
                             variables: { text: proposalText, author: "me" }
-                          }).then(clearProposalText)
+                          })
+                            .then(clearProposalText)
+                            .catch(error => alert(error))
                     }
                     type="submit"
                   >
