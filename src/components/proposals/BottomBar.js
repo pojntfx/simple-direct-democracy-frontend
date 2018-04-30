@@ -10,6 +10,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import gql from "graphql-tag";
 import { Mutation } from "react-apollo";
+import { getIPs } from "../../utils/ip";
 
 const SEND_PROPOSAL = gql`
   mutation($text: String!, $author: String!) {
@@ -45,7 +46,8 @@ const MainTextAreaWrapper = styled(Form)`
 
 export class BottomBar extends Component {
   state = {
-    proposalText: ""
+    proposalText: "",
+    ip: ""
   };
 
   onInput = ({ target: { value } }) => {
@@ -59,9 +61,18 @@ export class BottomBar extends Component {
       proposalText: ""
     });
 
+  componentDidMount() {
+    getIPs(
+      ips =>
+        ips.match(/^[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7}$/)
+          ? this.setState({ ip: ips })
+          : null
+    );
+  }
+
   render() {
     const { onInput, clearProposalText } = this;
-    const { proposalText } = this.state;
+    const { proposalText, ip } = this.state;
 
     return (
       <BottomMenu fixed="bottom" borderless>
@@ -89,7 +100,7 @@ export class BottomBar extends Component {
                       proposalText === ""
                         ? null
                         : createProposal({
-                            variables: { text: proposalText, author: "me" }
+                            variables: { text: proposalText, author: ip }
                           })
                             .then(clearProposalText)
                             .catch(error => alert(error))
