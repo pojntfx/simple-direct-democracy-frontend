@@ -1,18 +1,9 @@
-import React, { Fragment } from "react";
+import React, { Fragment, Component } from "react";
 import { BottomBar } from "./BottomBar";
 import { Proposal } from "./Proposal";
 import gql from "graphql-tag";
-import { Subscription, Query } from "react-apollo";
-
-const ALL_PROPOSALS_SUBSCRIPTION = gql`
-  subscription {
-    updatedProposals {
-      text
-      votes
-      id
-    }
-  }
-`;
+import { Query } from "react-apollo";
+import { List, Transition } from "semantic-ui-react";
 
 const ALL_PROPOSALS_QUERY = gql`
   {
@@ -24,34 +15,66 @@ const ALL_PROPOSALS_QUERY = gql`
   }
 `;
 
-export const Proposals = () => (
-  <Fragment>
-    <Subscription subscription={ALL_PROPOSALS_SUBSCRIPTION}>
-      {({ loading, error, data }) => {
-        if (loading)
-          return (
-            <Query query={ALL_PROPOSALS_QUERY}>
-              {({ loading, error, data }) => {
-                if (loading) return "Loading ...";
-                if (error) return `Error! ${error.message}`;
+const ALL_PROPOSALS_SUBSCRIPTION = gql`
+  subscription {
+    updatedProposals {
+      text
+      votes
+      id
+    }
+  }
+`;
 
-                return data.allProposals.map(({ text, votes, id }, index) => (
-                  <Proposal votes={votes} id={id} key={index}>
-                    {text}
-                  </Proposal>
-                ));
-              }}
-            </Query>
-          );
-        if (error) return `Error! ${error.message}`;
+export class Proposals extends Component {
+  render() {
+    return (
+      <Fragment>
+        <Query query={ALL_PROPOSALS_QUERY}>
+          {({ loading, error, data, subscribeToMore }) => {
+            if (loading) return `Loading ...`;
+            if (error) return `Error! ${error.message}`;
 
-        return data.updatedProposals.map(({ text, votes, id }, index) => (
-          <Proposal votes={votes} id={id} key={index}>
-            {text}
-          </Proposal>
-        ));
-      }}
-    </Subscription>
-    <BottomBar />
-  </Fragment>
-);
+            return (
+              <ProposalList
+                proposals={data.allProposals}
+                subscribeToNewProposals={() => {
+                  subscribeToMore({
+                    document: ALL_PROPOSALS_SUBSCRIPTION,
+                    updateQuery: (prev, { subscriptionData }) => {
+                      return {
+                        allProposals: subscriptionData.data.updatedProposals
+                      };
+                    }
+                  });
+                }}
+              />
+            );
+          }}
+        </Query>
+        <BottomBar />
+      </Fragment>
+    );
+  }
+}
+
+class ProposalList extends Component {
+  componentDidMount() {
+    this.props.subscribeToNewProposals();
+  }
+
+  render() {
+    const { proposals } = this.props;
+
+    return (
+      <Transition.Group as={List} duration={200} animation="scale">
+        {proposals.map(({ text, votes, id }, index) => (
+          <List.Item key={index}>
+            <Proposal votes={votes} id={id} key={index}>
+              {text}
+            </Proposal>
+          </List.Item>
+        ))}
+      </Transition.Group>
+    );
+  }
+}
