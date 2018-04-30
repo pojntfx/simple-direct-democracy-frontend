@@ -14,8 +14,8 @@ export const MainNavigation = () => (
       exact
     />
     <Menu.Item
-      to="/analysis"
-      name="Analysis"
+      to="/analytics"
+      name="Analytics"
       icon="bar chart"
       as={NavLink}
       activeClassName="active"

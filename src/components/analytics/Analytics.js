@@ -1,6 +1,6 @@
 import React from "react";
 
-export const Analysis = () => (
+export const Analytics = () => (
   <p>
     Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit eius
     illum, dicta repudiandae exercitationem sapiente? Accusamus ratione esse
