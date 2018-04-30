@@ -8,13 +8,13 @@ import {
 import { Introduction } from "../components/introduction/Introduction";
 import { PageNotFound } from "./PageNotFound";
 import { Proposals } from "./Proposals";
-import { Analysis } from "./Analysis";
+import { Analytics } from "./Analytics";
 
 export const Routes = () => (
   <Router>
     <Switch>
       <Route exact path="/proposals" component={Proposals} />
-      <Route exact path="/analysis" component={Analysis} />
+      <Route exact path="/analytics" component={Analytics} />
       <Route exact path="/introduction" component={Introduction} />
       <Route exact path="/" render={() => <Redirect to="/proposals" />} />
       <Route path="" component={PageNotFound} />
