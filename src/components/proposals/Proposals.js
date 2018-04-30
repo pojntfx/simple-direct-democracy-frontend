@@ -3,7 +3,7 @@ import { BottomBar } from "./BottomBar";
 import { Proposal } from "./Proposal";
 import gql from "graphql-tag";
 import { Query } from "react-apollo";
-import { List, Transition } from "semantic-ui-react";
+import { List, Transition, Dimmer, Loader } from "semantic-ui-react";
 
 const ALL_PROPOSALS_QUERY = gql`
   {
@@ -29,9 +29,14 @@ export class Proposals extends Component {
   render() {
     return (
       <Fragment>
-        <Query query={ALL_PROPOSALS_QUERY}>
+        <Query query={ALL_PROPOSALS_QUERY} pollInterval={2000}>
           {({ loading, error, data, subscribeToMore }) => {
-            if (loading) return `Loading ...`;
+            if (loading)
+              return (
+                <Dimmer active inverted>
+                  <Loader>Loading ...</Loader>
+                </Dimmer>
+              );
             if (error) return `Error! ${error.message}`;
 
             return (
