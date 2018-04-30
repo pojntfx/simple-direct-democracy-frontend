@@ -2,9 +2,19 @@ import React, { Fragment } from "react";
 import { BottomBar } from "./BottomBar";
 import { Proposal } from "./Proposal";
 import gql from "graphql-tag";
-import { Query } from "react-apollo";
+import { Subscription, Query } from "react-apollo";
 
-const GET_ALL_PROPOSALS = gql`
+const ALL_PROPOSALS_SUBSCRIPTION = gql`
+  subscription {
+    updatedProposals {
+      text
+      votes
+      id
+    }
+  }
+`;
+
+const ALL_PROPOSALS_QUERY = gql`
   {
     allProposals {
       text
@@ -16,18 +26,32 @@ const GET_ALL_PROPOSALS = gql`
 
 export const Proposals = () => (
   <Fragment>
-    <Query query={GET_ALL_PROPOSALS}>
+    <Subscription subscription={ALL_PROPOSALS_SUBSCRIPTION}>
       {({ loading, error, data }) => {
-        if (loading) return "Loading ...";
+        if (loading)
+          return (
+            <Query query={ALL_PROPOSALS_QUERY}>
+              {({ loading, error, data }) => {
+                if (loading) return "Loading ...";
+                if (error) return `Error! ${error.message}`;
+
+                return data.allProposals.map(({ text, votes, id }, index) => (
+                  <Proposal votes={votes} id={id} key={index}>
+                    {text}
+                  </Proposal>
+                ));
+              }}
+            </Query>
+          );
         if (error) return `Error! ${error.message}`;
 
-        return data.allProposals.map(({ text, votes, id }, index) => (
+        return data.updatedProposals.map(({ text, votes, id }, index) => (
           <Proposal votes={votes} id={id} key={index}>
             {text}
           </Proposal>
         ));
       }}
-    </Query>
+    </Subscription>
     <BottomBar />
   </Fragment>
 );
