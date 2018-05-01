@@ -4,6 +4,7 @@ import gql from "graphql-tag";
 import { Button, Segment, Grid, Dimmer, Loader } from "semantic-ui-react";
 
 import { BarChart } from "./BarChart";
+import { PieChart } from "./PieChart";
 
 const data = [
   { proposal: "Be awesome", votes: 1 },
@@ -60,6 +61,12 @@ export class Analytics extends Component {
               zoomOut={zoomOut}
               height={height}
             />
+          </ProposalsQuery>
+        );
+      case "pie-chart":
+        return (
+          <ProposalsQuery>
+            <PieChartVisualizer height={height} />
           </ProposalsQuery>
         );
       default:
@@ -122,7 +129,7 @@ const BarChartVisualizer = ({ zoomIn, zoomOut, height, data }) => [
   <Segment key="1">
     <Grid columns={2}>
       <Grid.Column textAlign="left" verticalAlign="middle">
-        <span>Tap a bar to get the proposal!</span>
+        <span>Tap or click a bar to get detailed info!</span>
       </Grid.Column>
       <Grid.Column textAlign="right" verticalAlign="middle">
         <Button onClick={zoomIn} icon="zoom" />
@@ -132,5 +139,14 @@ const BarChartVisualizer = ({ zoomIn, zoomOut, height, data }) => [
   </Segment>,
   <Segment key="2">
     <BarChart height={height} data={data} />
+  </Segment>
+];
+
+const PieChartVisualizer = ({ height, data }) => [
+  <Segment key="1">
+    <span>Tap or click a piece to get detailed info!</span>
+  </Segment>,
+  <Segment key="2">
+    <PieChart height={height} data={data} />
   </Segment>
 ];
