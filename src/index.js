@@ -13,9 +13,10 @@ import { EndpointSelection } from "./components/endpointselection/EndpointSelect
 import { injectGlobal } from "styled-components";
 
 injectGlobal`
-body {
+#direct-democracy-frontend {
   background: url("/start-bg.jpg")!important;
   background-size: cover!important;
+  min-height: 100%;
 }
 `;
 
