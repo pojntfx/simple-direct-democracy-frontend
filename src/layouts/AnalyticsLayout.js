@@ -5,8 +5,7 @@ import { MainNavigation } from "../components/global/MainNavigation";
 import { SideBar } from "../components/analytics/SideBar";
 
 const Container = styled(ContainerTemplate)`
-  padding-top: 1em;
-  padding-bottom: calc(2.85714286em + 1em + 0.9em);
+  padding: 1em 0;
 `;
 
 const SideBarToggleButton = styled(Button)`
