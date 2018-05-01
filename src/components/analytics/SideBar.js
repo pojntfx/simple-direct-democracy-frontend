@@ -36,44 +36,14 @@ export const SideBar = ({ children, visible, ...otherProps }) => (
           Pie Chart
         </Menu.Item>
         <Menu.Item
-          name="grid-chart"
+          name="mesh-chart"
           as={NavLink}
-          to="/analytics/grid-chart"
-          exact
-          activeClassName="active"
-        >
-          <Icon name="grid layout" />
-          Grid Chart
-        </Menu.Item>
-        <Menu.Item
-          name="bubble-chart"
-          as={NavLink}
-          to="/analytics/bubble-chart"
-          exact
-          activeClassName="active"
-        >
-          <Icon name="circle outline" />
-          Bubble Chart
-        </Menu.Item>
-        <Menu.Item
-          name="arc-chart"
-          as={NavLink}
-          to="/analytics/arc-chart"
-          exact
-          activeClassName="active"
-        >
-          <Icon name="circle notched" />
-          Arc Chart
-        </Menu.Item>
-        <Menu.Item
-          name="radar-chart"
-          as={NavLink}
-          to="/analytics/radar-chart"
+          to="/analytics/mesh-chart"
           exact
           activeClassName="active"
         >
           <Icon name="map" />
-          Radar Chart
+          Mesh Chart
         </Menu.Item>
       </Sidebar>
       <Sidebar.Pusher>{children}</Sidebar.Pusher>
