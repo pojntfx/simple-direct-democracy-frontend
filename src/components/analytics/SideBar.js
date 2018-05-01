@@ -51,4 +51,7 @@ const MainContainer = styled.div`
 const SideBarWrapper = styled(Sidebar.Pushable)`
   /* margin-top: 2.85714286em; */
   min-height: calc(100vh - 2.85714286em);
+  .ui.scale.down.right.sidebar ~ .pusher {
+    transform-origin: 25% 5em;
+  }
 `;
