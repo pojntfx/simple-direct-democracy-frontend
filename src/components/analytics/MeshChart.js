@@ -1,5 +1,5 @@
 import React from "react";
-import { Chart, Axis, Tooltip, Geom, Coord, G2, Label } from "bizcharts";
+import { Chart, Tooltip, Geom, Coord, G2, Label } from "bizcharts";
 
 // Disable tracking by AliPay. WTH though ...
 G2.track(false);

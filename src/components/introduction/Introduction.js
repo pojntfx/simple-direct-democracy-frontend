@@ -1,9 +1,9 @@
 import React from "react";
-import { DefaultLayout } from "../../layouts/DefaultLayout";
 import { Segment } from "semantic-ui-react";
+import { IntroductionLayout } from "../../layouts/IntroductionLayout";
 
 export const Introduction = () => (
-  <DefaultLayout>
+  <IntroductionLayout>
     <Segment>
       <h1>Getting started</h1>
       <p>
@@ -38,5 +38,5 @@ export const Introduction = () => (
         </a>.
       </p>
     </Segment>
-  </DefaultLayout>
+  </IntroductionLayout>
 );
