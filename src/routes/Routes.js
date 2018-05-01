@@ -14,7 +14,12 @@ export const Routes = () => (
   <Router>
     <Switch>
       <Route exact path="/proposals" component={Proposals} />
-      <Route exact path="/analytics" component={Analytics} />
+      <Route
+        exact
+        path="/analytics"
+        render={() => <Redirect to="/analytics/bar-chart" />}
+      />
+      <Route exact path="/analytics/:type" component={Analytics} />
       <Route exact path="/introduction" component={Introduction} />
       <Route exact path="/" render={() => <Redirect to="/proposals" />} />
       <Route path="" component={PageNotFound} />

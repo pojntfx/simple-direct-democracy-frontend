@@ -11,7 +11,6 @@ export const MainNavigation = () => (
       as={NavLink}
       activeClassName="active"
       link
-      exact
     />
     <Menu.Item
       to="/analytics"
@@ -20,7 +19,6 @@ export const MainNavigation = () => (
       as={NavLink}
       activeClassName="active"
       link
-      exact
     />
   </Menu>
 );
