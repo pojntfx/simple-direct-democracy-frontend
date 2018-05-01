@@ -8,16 +8,12 @@ export const BarChart = ({ data, height }) => (
   <Chart height={height} data={data} forceFit padding={0}>
     <Coord transpose />
     <Axis
-      name="proposal"
+      name="text"
       label={{ offset: -15, textStyle: { fill: "#000" } }}
       line={{ lineWidth: 0 }}
     />
     <Axis name="votes" line={{ lineWidth: 0 }} />
     <Tooltip />
-    <Geom
-      type="interval"
-      position="proposal*votes"
-      opacity={(33, 133, 208, 0.2)}
-    />
+    <Geom type="interval" position="text*votes" opacity={(33, 133, 208, 0.2)} />
   </Chart>
 );
