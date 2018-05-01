@@ -1,9 +1,9 @@
 import React from "react";
 import { Analytics as AnalyticsContent } from "../components/analytics/Analytics";
-import { DefaultLayout } from "../layouts/DefaultLayout";
+import { AnalyticsLayout } from "../layouts/AnalyticsLayout";
 
 export const Analytics = () => (
-  <DefaultLayout>
+  <AnalyticsLayout>
     <AnalyticsContent />
-  </DefaultLayout>
+  </AnalyticsLayout>
 );
