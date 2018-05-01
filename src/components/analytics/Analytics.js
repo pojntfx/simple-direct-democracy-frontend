@@ -1,5 +1,8 @@
 import React, { Component } from "react";
-import { Button, Segment, Grid } from "semantic-ui-react";
+import { Query } from "react-apollo";
+import gql from "graphql-tag";
+import { Button, Segment, Grid, Dimmer, Loader } from "semantic-ui-react";
+
 import { BarChart } from "./BarChart";
 
 const data = [
@@ -13,6 +16,24 @@ const data = [
   { proposal: "Dinesh", votes: 8 },
   { proposal: "Gilfoyle", votes: 9 }
 ];
+
+const ALL_PROPOSALS_QUERY = gql`
+  {
+    allProposals {
+      text
+      votes
+    }
+  }
+`;
+
+const ALL_PROPOSALS_SUBSCRIPTION = gql`
+  subscription {
+    updatedProposals {
+      text
+      votes
+    }
+  }
+`;
 
 export class Analytics extends Component {
   state = {
@@ -32,18 +53,70 @@ export class Analytics extends Component {
     switch (type) {
       case "bar-chart":
         return (
-          <BarChartVisualizer
-            zoomIn={zoomIn}
-            zoomOut={zoomOut}
-            height={height}
-            data={data}
-          />
+          <ProposalsQuery>
+            {/* <TestDataDisplay /> */}
+            <BarChartVisualizer
+              zoomIn={zoomIn}
+              zoomOut={zoomOut}
+              height={height}
+            />
+          </ProposalsQuery>
         );
       default:
         return <div>No such visualizer has been implemented yet.</div>;
     }
   }
 }
+
+const ProposalsQuery = ({ children }) => (
+  <Query query={ALL_PROPOSALS_QUERY} pollInterval={2000}>
+    {({ loading, error, data, subscribeToMore }) => {
+      if (loading)
+        return (
+          <Dimmer active inverted>
+            <Loader>Loading ...</Loader>
+          </Dimmer>
+        );
+      if (error) return `Error! ${error.message}`;
+
+      return (
+        <ProposalsWrapper
+          proposals={data.allProposals}
+          subscribeToNewProposals={() => {
+            subscribeToMore({
+              document: ALL_PROPOSALS_SUBSCRIPTION,
+              updateQuery: (prev, { subscriptionData }) => {
+                return {
+                  allProposals: subscriptionData.data.updatedProposals
+                };
+              }
+            });
+          }}
+        >
+          {children}
+        </ProposalsWrapper>
+      );
+    }}
+  </Query>
+);
+
+class ProposalsWrapper extends Component {
+  componentDidMount() {
+    this.props.subscribeToNewProposals();
+  }
+
+  render() {
+    return (
+      <div>
+        {React.cloneElement(this.props.children, {
+          data: this.props.proposals
+        })}
+      </div>
+    );
+  }
+}
+
+// const TestDataDisplay = ({ data }) => <div>{JSON.stringify(data)}</div>;
 
 const BarChartVisualizer = ({ zoomIn, zoomOut, height, data }) => [
   <Segment key="1">
