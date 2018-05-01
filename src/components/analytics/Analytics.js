@@ -5,6 +5,7 @@ import { Button, Segment, Grid, Dimmer, Loader } from "semantic-ui-react";
 
 import { BarChart } from "./BarChart";
 import { PieChart } from "./PieChart";
+import { MeshChart } from "./MeshChart";
 
 const data = [
   { proposal: "Be awesome", votes: 1 },
@@ -66,7 +67,22 @@ export class Analytics extends Component {
       case "pie-chart":
         return (
           <ProposalsQuery>
-            <PieChartVisualizer height={height} />
+            <PieChartVisualizer
+              zoomIn={zoomIn}
+              zoomOut={zoomOut}
+              height={height}
+            />
+          </ProposalsQuery>
+        );
+      case "mesh-chart":
+        return (
+          <ProposalsQuery>
+            {/* <TestDataDisplay /> */}
+            <MeshChartVisualizer
+              zoomIn={zoomIn}
+              zoomOut={zoomOut}
+              height={height}
+            />
           </ProposalsQuery>
         );
       default:
@@ -142,11 +158,36 @@ const BarChartVisualizer = ({ zoomIn, zoomOut, height, data }) => [
   </Segment>
 ];
 
-const PieChartVisualizer = ({ height, data }) => [
+const PieChartVisualizer = ({ zoomIn, zoomOut, height, data }) => [
   <Segment key="1">
-    <span>Tap or click a piece to get detailed info!</span>
+    <Grid columns={2}>
+      <Grid.Column textAlign="left" verticalAlign="middle">
+        <span>Tap or click a piece to get detailed info!</span>
+      </Grid.Column>
+      <Grid.Column textAlign="right" verticalAlign="middle">
+        <Button onClick={zoomIn} icon="zoom" />
+        <Button onClick={zoomOut} icon="zoom out" />
+      </Grid.Column>
+    </Grid>
   </Segment>,
   <Segment key="2">
     <PieChart height={height} data={data} />
+  </Segment>
+];
+
+const MeshChartVisualizer = ({ zoomIn, zoomOut, height, data }) => [
+  <Segment key="1">
+    <Grid columns={2}>
+      <Grid.Column textAlign="left" verticalAlign="middle">
+        <span>Tap or click a node to get detailed info!</span>
+      </Grid.Column>
+      <Grid.Column textAlign="right" verticalAlign="middle">
+        <Button onClick={zoomIn} icon="zoom" />
+        <Button onClick={zoomOut} icon="zoom out" />
+      </Grid.Column>
+    </Grid>
+  </Segment>,
+  <Segment key="2">
+    <MeshChart height={height} data={data} />
   </Segment>
 ];
