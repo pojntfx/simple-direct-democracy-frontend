@@ -86,7 +86,7 @@ export class BottomBar extends Component {
     return (
       <BottomMenu fixed="bottom" borderless>
         <Menu.Item position="left">
-          <Button icon as={Link} to="/introduction">
+          <Button icon as={Link} to="/tutorial">
             <Icon name="info" />
           </Button>
         </Menu.Item>
