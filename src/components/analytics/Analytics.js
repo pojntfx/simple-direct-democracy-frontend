@@ -110,7 +110,8 @@ const ProposalsQuery = ({ children }) => (
               document: ALL_PROPOSALS_SUBSCRIPTION,
               updateQuery: (prev, { subscriptionData }) => {
                 return {
-                  allProposals: subscriptionData.data.updatedProposalsReversed
+                  allProposalsReversed:
+                    subscriptionData.data.updatedProposalsReversed
                 };
               }
             });
