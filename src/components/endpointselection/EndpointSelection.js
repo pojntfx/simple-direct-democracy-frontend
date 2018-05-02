@@ -1,16 +1,6 @@
 import React, { Component } from "react";
-import {
-  Button,
-  Form,
-  Container as ContainerTemplate,
-  Header,
-  Segment
-} from "semantic-ui-react";
-import styled from "styled-components";
-
-const Container = styled(ContainerTemplate)`
-  padding: 1em 0;
-`;
+import { Button, Segment, Header, Form } from "semantic-ui-react";
+import { IntroductionLayout } from "../../layouts/IntroductionLayout";
 
 export class EndpointSelection extends Component {
   state = {
@@ -27,13 +17,14 @@ export class EndpointSelection extends Component {
   render() {
     const { onInputChange, onSubmit } = this;
     const { endpoint } = this.state;
+
     return (
-      <Container>
+      <IntroductionLayout>
         <Segment>
           <Header
             as="h2"
             content="Let's get started!"
-            subheader="Connect to the proposal and voting service by entering the endpoint given to you by your governing body."
+            subheader="Connect to the proposal and voting service by entering the endpoint given to you by your governing body below."
           />
           <Form onSubmit={onSubmit}>
             <Form.Field>
@@ -46,12 +37,16 @@ export class EndpointSelection extends Component {
                 onChange={onInputChange}
               />
             </Form.Field>
-            <Button type="submit" primary>
-              Connect
-            </Button>
+            <ConnectButton />
           </Form>
         </Segment>
-      </Container>
+      </IntroductionLayout>
     );
   }
 }
+
+const ConnectButton = () => (
+  <Button fluid primary type="submit">
+    Connect
+  </Button>
+);
