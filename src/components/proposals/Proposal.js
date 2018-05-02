@@ -69,7 +69,7 @@ export class Proposal extends Component {
     return (
       <Card fluid {...otherProps}>
         <Card.Content>
-          <Card.Header>{children}</Card.Header>
+          <LongContentHeader>{children}</LongContentHeader>
         </Card.Content>
         <Card.Content extra>
           <CardActions>
@@ -115,3 +115,7 @@ export class Proposal extends Component {
     );
   }
 }
+
+const LongContentHeader = styled(Card.Header)`
+  overflow-x: auto;
+`;
