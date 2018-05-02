@@ -62,7 +62,7 @@ export const Duties = () => (
         labelPosition="right"
         primary
         as={Link}
-        to="/tutorial"
+        to="/tutorial/fromtutorial"
       />
     </NextSegment>
   </IntroductionLayout>
