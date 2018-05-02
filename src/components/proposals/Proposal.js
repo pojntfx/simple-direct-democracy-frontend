@@ -54,11 +54,9 @@ export class Proposal extends Component {
     pc.createOffer(pc.setLocalDescription.bind(pc), noop);
     pc.onicecandidate = ice => {
       if (ice && ice.candidate && ice.candidate.candidate) {
-        var myIP = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/.exec(
-          ice.candidate.candidate
-        )[1];
+        const ip = ice.candidate.candidate.split(" ")[4];
         pc.onicecandidate = noop;
-        setIp(myIP);
+        setIp(ip);
       }
     };
 
