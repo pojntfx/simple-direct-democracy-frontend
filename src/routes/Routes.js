@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -14,16 +14,39 @@ import { Analytics } from "./Analytics";
 import { Tutorial } from "../components/introduction/Tutorial";
 import { SetupComplete } from "../components/introduction/SetupComplete";
 
+let Authentication = ({ children }) =>
+  localStorage.getItem("hasFinishedIntroduction") === "true" ? (
+    <Fragment>{children}</Fragment>
+  ) : (
+    <Redirect to="/principles" />
+  );
+
 export const Routes = () => (
   <Router>
     <Switch>
-      <Route exact path="/proposals" component={Proposals} />
+      <Route
+        exact
+        path="/proposals"
+        render={() => (
+          <Authentication>
+            <Proposals />
+          </Authentication>
+        )}
+      />
       <Route
         exact
         path="/analytics"
         render={() => <Redirect to="/analytics/bar-chart" />}
       />
-      <Route exact path="/analytics/:type" component={Analytics} />
+      <Route
+        exact
+        path="/analytics/:type"
+        render={props => (
+          <Authentication>
+            <Analytics {...props} />
+          </Authentication>
+        )}
+      />
       <Route exact path="/principles" component={Prinicples} />
       <Route exact path="/rights" component={Rights} />
       <Route exact path="/duties" component={Duties} />

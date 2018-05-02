@@ -19,6 +19,9 @@ export const SetupComplete = () => (
   </IntroductionLayout>
 );
 
+const registerFinishedState = () =>
+  localStorage.setItem("hasFinishedIntroduction", "true");
+
 const FinishButton = () => (
   <Button
     primary
@@ -28,5 +31,6 @@ const FinishButton = () => (
     labelPosition="right"
     as={Link}
     to="/"
+    onClick={registerFinishedState}
   />
 );
