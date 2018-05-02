@@ -27,7 +27,7 @@ export const Routes = () => (
       <Route exact path="/principles" component={Prinicples} />
       <Route exact path="/rights" component={Rights} />
       <Route exact path="/duties" component={Duties} />
-      <Route exact path="/tutorial" component={Tutorial} />
+      <Route exact path="/tutorial/:istutorial" component={Tutorial} />
       <Route exact path="/setup-complete" component={SetupComplete} />
       <Route exact path="/" render={() => <Redirect to="/proposals" />} />
       <Route path="" component={PageNotFound} />

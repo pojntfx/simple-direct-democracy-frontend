@@ -1,10 +1,14 @@
 import React from "react";
-import { Segment, Button, List } from "semantic-ui-react";
+import { Segment, Button } from "semantic-ui-react";
 import { IntroductionLayout } from "../../layouts/IntroductionLayout";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-export const Tutorial = () => (
+export const Tutorial = ({
+  match: {
+    params: { istutorial }
+  }
+}) => (
   <IntroductionLayout>
     <Segment>
       <h1>A quick introduction</h1>
@@ -67,23 +71,36 @@ export const Tutorial = () => (
         makes the most sense when many votes have been cast.
       </p>
     </Segment>
-
     <NextSegment>
-      <Button
-        content="Back"
-        icon="left arrow"
-        labelPosition="left"
-        as={Link}
-        to="/duties"
-      />
-      <Button
-        content="Next"
-        icon="right arrow"
-        labelPosition="right"
-        primary
-        as={Link}
-        to="/setup-complete"
-      />
+      {istutorial === "notutorial" ? (
+        <Button
+          content="Back"
+          icon="left arrow"
+          labelPosition="left"
+          as={Link}
+          to="/"
+        />
+      ) : (
+        [
+          <Button
+            content="Back"
+            icon="left arrow"
+            labelPosition="left"
+            as={Link}
+            to="/duties"
+            key="1"
+          />,
+          <Button
+            content="Next"
+            icon="right arrow"
+            labelPosition="right"
+            primary
+            as={Link}
+            to="/setup-complete"
+            key="2"
+          />
+        ]
+      )}
     </NextSegment>
   </IntroductionLayout>
 );
