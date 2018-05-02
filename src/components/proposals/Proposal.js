@@ -3,7 +3,6 @@ import { Button, Icon, Card } from "semantic-ui-react";
 import styled from "styled-components";
 import gql from "graphql-tag";
 import { Mutation } from "react-apollo";
-import { getIPs } from "../../utils/ip";
 
 const UPVOTE_PROPOSAL = gql`
   mutation($id: String!, $author: String!) {
@@ -46,12 +45,24 @@ export class Proposal extends Component {
   };
 
   componentDidMount() {
-    getIPs(
-      ips =>
-        ips.match(/^[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7}$/)
-          ? this.setState({ ip: ips })
-          : null
-    );
+    window.RTCPeerConnection = window.RTCPeerConnection;
+    var pc = new RTCPeerConnection({
+        iceServers: []
+      }),
+      noop = function() {};
+    pc.createDataChannel("");
+    pc.createOffer(pc.setLocalDescription.bind(pc), noop);
+    pc.onicecandidate = ice => {
+      if (ice && ice.candidate && ice.candidate.candidate) {
+        var myIP = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/.exec(
+          ice.candidate.candidate
+        )[1];
+        pc.onicecandidate = noop;
+        setIp(myIP);
+      }
+    };
+
+    const setIp = ip => this.setState({ ip });
   }
 
   render() {
