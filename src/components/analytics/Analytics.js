@@ -21,7 +21,7 @@ const data = [
 
 const ALL_PROPOSALS_QUERY = gql`
   {
-    allProposals {
+    allProposalsReversed {
       text
       votes
     }
@@ -30,7 +30,7 @@ const ALL_PROPOSALS_QUERY = gql`
 
 const ALL_PROPOSALS_SUBSCRIPTION = gql`
   subscription {
-    updatedProposals {
+    updatedProposalsReversed {
       text
       votes
     }
@@ -104,13 +104,13 @@ const ProposalsQuery = ({ children }) => (
 
       return (
         <ProposalsWrapper
-          proposals={data.allProposals}
+          proposals={data.allProposalsReversed}
           subscribeToNewProposals={() => {
             subscribeToMore({
               document: ALL_PROPOSALS_SUBSCRIPTION,
               updateQuery: (prev, { subscriptionData }) => {
                 return {
-                  allProposals: subscriptionData.data.updatedProposals
+                  allProposals: subscriptionData.data.updatedProposalsReversed
                 };
               }
             });

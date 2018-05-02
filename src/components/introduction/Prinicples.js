@@ -1,11 +1,20 @@
 import React from "react";
-import { Segment, Button, List } from "semantic-ui-react";
+import { Segment, Button, List, Header, Icon } from "semantic-ui-react";
 import { IntroductionLayout } from "../../layouts/IntroductionLayout";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 export const Prinicples = () => (
   <IntroductionLayout>
+    <Segment>
+      <Header as="h2" icon>
+        <Icon name="hand peace" />
+        Welcome to direct democracy!
+        <Header.Subheader>
+          Please follow the quick introduction to contribute.
+        </Header.Subheader>
+      </Header>
+    </Segment>
     <Segment>
       <h1>Principles</h1>
       <p>
