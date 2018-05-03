@@ -9,7 +9,7 @@ export const Prinicples = () => (
     <Segment>
       <Header as="h2" icon>
         <Icon name="hand peace" />
-        Welcome to direct democracy!
+        Welcome to Direct Democracy!
         <Header.Subheader>
           Please follow the quick introduction to contribute.
         </Header.Subheader>
@@ -32,8 +32,8 @@ export const Prinicples = () => (
         </List.Item>
         <List.Item>
           <b>ANALYZE:</b> <br />
-          You may analyze the current vote structure and get a better
-          understanding of the current situation
+          You may analyze the current voting structure and thus get a better
+          understanding of the situation
         </List.Item>
       </List>
       <p>

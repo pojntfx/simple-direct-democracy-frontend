@@ -52,7 +52,10 @@ export const Rights = () => (
         </b>
       </p>
 
-      <p>Simple Direct Democracy Frontend Copyright (C) 2018 Felicitas Pojtinger</p>
+      <p>
+        Simple Direct Democracy Frontend and Backend Copyright (C) 2018 Felicitas
+        Pojtinger
+      </p>
 
       <p>
         This program is free software: you can redistribute it and/or modify it
