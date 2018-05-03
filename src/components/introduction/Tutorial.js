@@ -13,8 +13,8 @@ export const Tutorial = ({
     <Segment>
       <h1>A quick introduction</h1>
       <p>
-        After finishing the setup in the next step, the following view will
-        greet you:
+        After finishing the setup in the next step, the following will greet
+        you:
       </p>
     </Segment>
     <Segment>
@@ -22,12 +22,12 @@ export const Tutorial = ({
       <Img src="/proposals-navigation.png" alt="Proposal page main view" />
       <p>
         In this top navigation you may choose whether you want to suggest or
-        vote on a proposal or analyze the current situation.
+        vote on a proposal or alternatively analyze the current situation.
       </p>
       <Img src="/proposals-card.png" alt="Proposal card view" />
       <p>
-        Using a {"proposal's card"} like the one you can see above you can vote
-        on existing proposals. The vote count does not have to reflect the
+        By using a {"proposal's card"} like the one you can see above you can
+        vote on existing proposals. The vote count does not have to reflect the
         actual number of votes, but the ratio does match. By pressing{" "}
         {`"Upvote"`} you may vote for a proposal, by pressing {`"Downvote"`} you
         may vote against a proposal. A negative amount of votes is possible.
@@ -67,8 +67,8 @@ export const Tutorial = ({
         alt="Analytics drawer view"
       />
       <p>
-        You may choose a different style here, but using the default bar chart
-        makes the most sense when many votes have been cast.
+        You may choose a different chart style here, but using the default bar
+        chart makes the most sense when many votes have been cast.
       </p>
     </Segment>
     <NextSegment>
