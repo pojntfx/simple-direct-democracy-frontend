@@ -24,47 +24,58 @@ injectGlobal`
 let endpoint = undefined;
 
 class MainUI extends Component {
-  render() {
-    if (endpoint) {
-      // TODO: Add error handling for ws & http
-      const link = split(
-        ({ query }) => {
-          const { kind, operation } = getMainDefinition(query);
-          return kind === "OperationDefinition" && operation === "subscription";
-        },
-        new WebSocketLink({
-          uri: `ws:/${endpoint}:3000/`,
-          options: {
-            reconnect: true
-          }
-        }),
-        new HttpLink({
-          uri: `http://${endpoint}:3000`,
-          credentials: "same-origin"
-        })
-      );
+	render() {
+		if (endpoint) {
+			// TODO: Add error handling for ws & http
+			const link = split(
+				({ query }) => {
+					const {
+						kind,
+						operation
+					} = getMainDefinition(query);
+					return (
+						kind ===
+							"OperationDefinition" &&
+						operation === "subscription"
+					);
+				},
+				new WebSocketLink({
+					uri: `wss:/${endpoint}:3000/`,
+					options: {
+						reconnect: true
+					}
+				}),
+				new HttpLink({
+					uri: `http://${endpoint}:3000`,
+					credentials: "same-origin"
+				})
+			);
 
-      const client = new ApolloClient({
-        link,
-        cache: new InMemoryCache()
-      });
+			const client = new ApolloClient({
+				link,
+				cache: new InMemoryCache()
+			});
 
-      return (
-        <ApolloProvider client={client}>
-          <Routes />
-        </ApolloProvider>
-      );
-    } else {
-      const setEndpoint = newEndpoint => {
-        endpoint = newEndpoint;
-        this.forceUpdate();
-      };
-      return <EndpointSelection onEndpointSubmit={setEndpoint} />;
-    }
-  }
+			return (
+				<ApolloProvider client={client}>
+					<Routes />
+				</ApolloProvider>
+			);
+		} else {
+			const setEndpoint = newEndpoint => {
+				endpoint = newEndpoint;
+				this.forceUpdate();
+			};
+			return (
+				<EndpointSelection
+					onEndpointSubmit={setEndpoint}
+				/>
+			);
+		}
+	}
 }
 
 ReactDOM.render(
-  <MainUI />,
-  document.getElementById("direct-democracy-frontend")
+	<MainUI />,
+	document.getElementById("direct-democracy-frontend")
 );
